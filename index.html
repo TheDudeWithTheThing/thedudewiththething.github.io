@@ -1,1 +1,11 @@
-My site at github pages!
+---
+layout: default
+title: sbutler.org
+---
+
+{% for post in site.posts limit:3 %}
+  <article>
+    {{ post.content }}
+  </article>
+  <hr>
+{% endfor %}
