@@ -1,0 +1,14 @@
+{
+  "name": "thedudewiththething-github-pages",
+  "dependencies": {
+    "zepto": "*",
+    "lodash": "*",
+    "kineticjs": "*",
+    "font-awesome": "*"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ]
+}
