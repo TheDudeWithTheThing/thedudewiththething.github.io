@@ -7,11 +7,15 @@
     <title>{{ page.title }}</title>
     <meta name="description" content=""/>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="stylesheets/site.css" />
-    <link rel="stylesheet" href="stylesheets/font-awesome.css" />
-    <script src="js/site.js"></script>
+
+    <script src="http://localhost:35729/livereload.js"></script>
+
+    <link rel="stylesheet" href="/stylesheets/font-awesome.css" />
+    <link rel="stylesheet" href="/stylesheets/ir_black.css" />
+    <link rel="stylesheet" href="/stylesheets/site.css" />
 
     <link href='http://fonts.googleapis.com/css?family=Oxygen+Mono' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Anonymous+Pro:400,700' rel='stylesheet' type='text/css'>
 
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
@@ -29,9 +33,9 @@
         <hgroup>
           <div class="left title">
             <h1>
-              <a href="/">sbutler.org</a>
+              <a href="/">thedudewiththething</a>
             </h1>
-            <h2>aka thedudewiththething</h2>
+            <h2>{{ site.description }}</h2>
           </div>
           <div class="right social">
             <a class="huge github" href="https://github.com/thedudewiththething" title="@TheDudeWithTheThing on GitHub">
@@ -47,33 +51,24 @@
 
       <hr />
 
-      <nav>
-        <div class="container">
-          <div class="left quarter">
-            <a class="huge" href="prev-post" title="">«</a>
-          </div>
-          <div class="middle big half">
-            <span>Jekyll, Bower and Grunt walk into a bar</span>
-          </div>
-          <div class="right quarter">
-            <span class="huge">•</span>
-          </div>
-          <div class="clearfix"></div>
-        </div>
-      </nav>
-
-      <hr />
-
       <main>
         {{ content }}
       </main>
 
       <footer>
       <ul class="container middle">
-        <li>
-          <time datetime="2014-02-19">2014-02-19</time>
-          <a href="throttled--guardian-of-the-web-server">Throttled: Guardian Of The Web Server</a>
-        </li>
+        {% assign years= "2014" | split: "|" %}
+        {% for year in years %}
+          <div class="year">
+            <h2>Articles from {{ year }}</h2>
+              {% for post in site.posts %}
+                {% capture post_year %}{{post.date | date: "%Y"}}{% endcapture %}
+                {% if post_year == year %}
+                <li><time>{{ post.date | date_to_string }}</time> <a href="{{ post.url }}">{{ post.title }}</a></li>
+                {% endif %}
+              {% endfor %}
+          </div>
+        {% endfor %}
       </ul>
       <div class="container middle">
         <small>

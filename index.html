@@ -1,11 +1,12 @@
 ---
 layout: default
-title: sbutler.org
+title: thedudewiththething.com
 ---
 
 {% for post in site.posts limit:3 %}
   <article>
+    <h1>{{ post.title }}</h1>
+    <h4 class="date">{{ post.date | date_to_string }}</h4>
     {{ post.content }}
   </article>
-  <hr>
 {% endfor %}
