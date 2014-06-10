@@ -14,7 +14,7 @@ body {
 article, aside, details, figcaption, figure, footer, hgroup, header, main, nav, section, summary {
   display: block; }
   article a, aside a, details a, figcaption a, figure a, footer a, hgroup a, header a, main a, nav a, section a, summary a {
-    color: #000088;
+    color: #B8860B;
     text-decoration: none; }
     article a:hover, aside a:hover, details a:hover, figcaption a:hover, figure a:hover, footer a:hover, hgroup a:hover, header a:hover, main a:hover, nav a:hover, section a:hover, summary a:hover {
       text-decoration: underline; }
