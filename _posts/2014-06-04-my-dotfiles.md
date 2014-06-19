@@ -12,7 +12,7 @@ You can find my dotfiles [here](https://github.com/TheDudeWithTheThing/dotfiles.
 alias v='mvim .'
 ```
 
-I use <D-F> for my fuzzy file find so I needed to remap the gui version. It's vim, I have /, no need to hog more keys for find in file. I also decided to use <D-t> to tag search so neededt to remap new tab to <D-T>. I never knew you could just edit the gui menu so this was a nice find.
+I use &lt;D-F> for my fuzzy file find so I needed to remap the gui version. It's vim, I have /, no need to hog more keys for find in file. I also decided to use &lt;D-t&gt; to tag search so neededt to remap new tab to &lt;D-T&gt;. I never knew you could just edit the gui menu so this was a nice find.
 
 ```vim
 if has('gui_macvim')
@@ -21,16 +21,6 @@ if has('gui_macvim')
 endif
 ```
 
-For vim / mvim I was using [janus](https://github.com/carlhuda/janus) but felt it had too much stuff that I never used. I finally sat down, after almost 20 years of using vim, and created my own vim files. I used a lot of janus as a starting point. I like my default actions to open files in new tabs and this one does just what the comments say.
+For vim / mvim I was using [janus](https://github.com/carlhuda/janus) but felt it had too much stuff that I never used. I finally sat down, after almost 20 years of using vim, and created my own vim files. I used a lot of janus as a starting point since I was pretty used to it already.
 
-
-```vim
-" CtrlP settings
-" make enter auto open in new tab
-let g:ctrlp_prompt_mappings = {
-    \ 'AcceptSelection("e")': ['<S-cr>'],
-    \ 'AcceptSelection("t")': ['<cr>', '<2-LeftMouse>'],
-    \ 'AcceptSelection("h")': ['<c-x>', '<c-cr>', '<c-s>'],
-    \ 'AcceptSelection("v")': ['<c-v>', '<RightMouse>'],
-    \ }
-```
+Many thanks to [thoughtbot](http://robots.thoughtbot.com/rcm-for-rc-files-in-dotfiles-repos) for making rcm. It made the whole source controled dot files stupid simple.
