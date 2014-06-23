@@ -5,7 +5,7 @@ module.exports = (grunt) ->
   grunt.initConfig
     pkg: grunt.file.readJSON('package.json'),
     watch:
-      files: ['src/scss/*.scss', '_posts/*.md', '_layouts/*.html', '_config.yml']
+      files: ['src/scss/*.scss', '_posts/*.md', '_layouts/*.html', '_config.yml', 'src/coffee/**/*.coffee', '*.html', 'src/coffee/templates/*.emblem']
       tasks: ['default', 'shell:jekyllBuild']
       options:
         interrupt: true
@@ -21,7 +21,18 @@ module.exports = (grunt) ->
     coffee:
       compile:
         files:
-          'src/js/site.js': 'src/coffee/*.coffee'
+          'js/site.js': 'src/coffee/**/*.coffee'
+    emblem:
+      compile:
+        files:
+          'js/templates.js': 'src/coffee/templates/*.emblem',
+      options:
+        root: 'src/coffee/templates/'
+        dependencies:
+          jquery: 'js/jquery.min.js'
+          ember: 'js/ember.min.js'
+          emblem: 'js/emblem.min.js'
+          handlebars: 'js/handlebars.min.js'
     sass:
       dist:
         files:
@@ -30,7 +41,7 @@ module.exports = (grunt) ->
           'stylesheets/font-awesome.css': 'bower_components/font-awesome/scss/font-awesome.scss'
     shell:
       jekyllBuild:
-        command: 'jekyll build'
+        command: 'jekyll build --drafts'
       jekyllServe: 
         command: 'jekyll serve'
     uglify:
@@ -40,4 +51,4 @@ module.exports = (grunt) ->
         files:
           'js/<%= pkg.name %>.min.js': ['<%= coffee,dist.dest %>']
 
-  grunt.registerTask('default', ['clean', 'sass', 'coffee'])
+  grunt.registerTask('default', ['clean', 'sass', 'coffee', 'emblem'])
