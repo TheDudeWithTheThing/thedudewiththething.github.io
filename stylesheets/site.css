@@ -66,6 +66,16 @@ pre {
 code, pre {
   font-size: 1em; }
 
+code {
+  color: #464646;
+  font-family: "Anonymous Pro", "Courier New", monospace;
+  background-color: #f0f0f0;
+  border: 1px solid #c8c8c8;
+  margin: 1px;
+  padding: 5px;
+  font-size: 85%;
+  border-radius: 3px; }
+
 p, pre {
   margin: 1em 0; }
 

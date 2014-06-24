@@ -68,15 +68,15 @@ grunt.initConfig
         'js/<%= pkg.name %>.min.js': ['<%= coffee,dist.dest %>']
 ```
 
-My workflow is to open up a split terminal, both in my working directory. After that I run 
-```bash
+My workflow is to open up a split terminal, both in my working directory and then run
+```
 jekyll serve --drafts
 ```
 in one and
-```bash
+```
 grunt watch
 ```
-in the other. I actually have grunt watch alias'd to gw, so I run that instead. 
+in the other. I actually have grunt watch alias'd to gw. The great thing about grunt watch is the live reload. After everything is built my localhost:4000 auto refreshes and reflects all the changes.
 
 Since this is getting pretty lengthy already I'll wrap it up and save how to use this set up for your own github pages for another post.
 
