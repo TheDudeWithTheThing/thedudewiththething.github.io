@@ -3,7 +3,7 @@ body {
   font-family: "Oxygen Mono", monospace;
   line-height: 1.5;
   color: black;
-  background-color: whitesmoke;
+  background-color: #F5F5F5;
   margin: 0;
 }
 
@@ -183,5 +183,27 @@ ul {
 
 ul.container {
   list-style: none;
+}
+
+ul.tags {
+  list-style: none;
+
+  li {
+    display: inline-block;
+    background-color: #ccc;
+    padding: 8px;
+    font-size: 65%;
+  }
+
+  li.post-title {
+    font-size: 1.8em;
+    margin: 0 0;
+    background-color: inherit;
+  }
+
+  li.date {
+    font-weight: bold;
+    font-size: 75%;
+  }
 }
 
