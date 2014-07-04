@@ -5,7 +5,7 @@ module.exports = (grunt) ->
   grunt.initConfig
     pkg: grunt.file.readJSON('package.json'),
     watch:
-      files: ['src/scss/*.scss', '_posts/*.md', '_layouts/*.html', '_config.yml', 'src/coffee/**/*.coffee', '*.html', 'src/coffee/templates/*.emblem']
+      files: ['src/scss/*.scss', '_drafts/*.md', '_posts/*.md', '_layouts/*.html', '_config.yml', 'src/coffee/**/*.coffee', '*.html', 'src/coffee/templates/*.emblem']
       tasks: ['default', 'shell:jekyllBuild']
       options:
         interrupt: true
@@ -43,7 +43,7 @@ module.exports = (grunt) ->
       jekyllBuild:
         command: 'jekyll build --drafts'
       jekyllServe: 
-        command: 'jekyll serve'
+        command: 'jekyll serve --drafts'
     uglify:
       options:
         banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
