@@ -17,14 +17,22 @@ function registerEvents() {
 }
 
 function render() {
-  var start = Date.parse($('#start').val()),
-      deadline = Date.parse($('#deadline').val()),
+  var start = moment($('#start').val()),
+      deadline = moment($('#deadline').val()),
       hours = parseInt($('#hours').val()),
       complete = parseInt($("#complete").val());
 
   if (isNaN(start) || isNaN(deadline) || isNaN(hours) || isNaN(complete)) {
     return;
   }
+
+  var daysLeft = deadline.diff(start, 'days');
+  var hoursLeft = hours - complete;
+  var hoursPerDayLeft = (hoursLeft / daysLeft).toFixed(2);
+
+  $('.days-left').text(daysLeft);
+  $('.hours-left').text(hoursLeft);
+  $('.hours-per-day').text(hoursPerDayLeft);
 
   var height = $('.progress-mask').height(),
       percentComplete = complete / hours,
@@ -39,7 +47,6 @@ function render() {
   });
 }
 
-
 function saveData(datas) {
   Object.keys(datas).forEach( function(key) {
     localStorage.setItem(key, datas[key]);
@@ -47,19 +54,13 @@ function saveData(datas) {
 }
 
 function loadData() {
-  var datas = {};
-
-  return datas;
-}
-
-function loadData() {
-  var start = parseInt(localStorage.getItem('start')),
-      deadline = parseInt(localStorage.getItem('deadline')),
+  var start = moment(localStorage.getItem('start')),
+      deadline = moment(localStorage.getItem('deadline')),
       hours = localStorage.getItem('hours'),
       complete = localStorage.getItem('complete');
 
-  $('#start').val(new Date(start).toLocaleDateString());
-  $('#deadline').val(new Date(deadline).toLocaleDateString());
+  $('#start').val(start.format('MM-DD-YYYY'));
+  $('#deadline').val(deadline.format('MM-DD-YYYY'));
   $('#hours').val(hours);
   $('#complete').val(complete);
 }
