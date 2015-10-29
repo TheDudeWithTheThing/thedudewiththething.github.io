@@ -5,8 +5,9 @@ module.exports = (grunt) ->
   grunt.initConfig
     pkg: grunt.file.readJSON('package.json'),
     watch:
-      files: ['src/scss/*.scss', '_drafts/*.md', '_posts/*.md', '_layouts/*.html', '_config.yml', 'src/coffee/**/*.coffee', '*.html', 'src/coffee/templates/*.emblem']
-      tasks: ['default', 'shell:jekyllBuild']
+      files: ['src/scss/*.scss', '_drafts/*.md', '_posts/*.md', '_layouts/*.html', '_config.yml', 'src/coffee/**/*.coffee', '*.html']
+      # tasks: ['default', 'shell:jekyllBuild']
+      tasks: ['default']
       options:
         interrupt: true
         atBegin: true
@@ -22,17 +23,6 @@ module.exports = (grunt) ->
       compile:
         files:
           'js/site.js': 'src/coffee/**/*.coffee'
-    emblem:
-      compile:
-        files:
-          'js/templates.js': 'src/coffee/templates/*.emblem',
-      options:
-        root: 'src/coffee/templates/'
-        dependencies:
-          jquery: 'js/jquery.min.js'
-          ember: 'js/ember.min.js'
-          emblem: 'js/emblem.min.js'
-          handlebars: 'js/handlebars.min.js'
     sass:
       dist:
         files:
@@ -51,4 +41,4 @@ module.exports = (grunt) ->
         files:
           'js/<%= pkg.name %>.min.js': ['<%= coffee,dist.dest %>']
 
-  grunt.registerTask('default', ['clean', 'sass', 'coffee', 'emblem'])
+  grunt.registerTask('default', ['clean', 'sass', 'coffee'])

@@ -2,7 +2,7 @@
 title: My Dotfiles
 layout: post
 author: Shaun
-category: code
+categories: code
 tags: vim
 ---
 

@@ -2,7 +2,7 @@
 title: Jekyll, Grunt And Bower Walk Into A Bar
 layout: post
 author: Shaun
-category: code
+categories: code
 tags: jekyll grunt bower
 ---
 

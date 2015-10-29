@@ -207,3 +207,28 @@ ul.tags {
   }
 }
 
+#prs {
+  #inputs {
+    float: right;
+    width: 48%;
+  }
+
+  div.progress {
+    float: left;
+    position: relative;
+    width: 48%;
+
+    .progress-mask {
+      float: left;
+      background-color: #ffffff;
+      opacity: 0.6;
+      width: 437px;
+      height: 1200px;
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      z-index: 1000;
+    }
+  }
+
+}

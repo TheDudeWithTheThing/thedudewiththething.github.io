@@ -2,7 +2,7 @@
 title: link_to vs. a
 author: Shaun
 layout: post
-categories: programming
+categories: code
 tags: rails javascript
 ---
 
