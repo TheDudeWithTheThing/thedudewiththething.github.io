@@ -53,13 +53,18 @@ function saveData(datas) {
 
 function loadData() {
   var dateFormat = 'YYYY-MM-DD',
-      start = moment(localStorage.getItem('start'), dateFormat),
-      deadline = moment(localStorage.getItem('deadline'), dateFormat),
+      start = localStorage.getItem('start'),
+      deadline = localStorage.getItem('deadline'),
       hours = localStorage.getItem('hours'),
       complete = localStorage.getItem('complete');
 
-  $('#start').val(start.format(dateFormat));
-  $('#deadline').val(deadline.format(dateFormat));
+  if (start) {
+    $('#start').val(moment(start, dateFormat).format(dateFormat));
+  }
+  if (deadline) {
+    $('#deadline').val(moment(deadline, dateFormat).format(dateFormat));
+  }
+
   $('#hours').val(hours);
   $('#complete').val(complete);
 }
