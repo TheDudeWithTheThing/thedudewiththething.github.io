@@ -9,16 +9,14 @@ function registerEvents() {
   $('#deadline').on('keyup', render);
   $('#hours').on('keyup', render);
   $('#complete').on('keyup', render);
-
-  $('#start').on('blur', render);
-  $('#deadline').on('blur', render);
-  $('#hours').on('blur', render);
-  $('#complete').on('blur', render);
+  $('.log-hour').on('click', logHour);
+  $('.clear-data').on('click', clearData);
 }
 
 function render() {
-  var start = moment($('#start').val()),
-      deadline = moment($('#deadline').val()),
+  var dateFormat = 'YYYY-MM-DD',
+      start = moment($('#start').val(), dateFormat),
+      deadline = moment($('#deadline').val(), dateFormat),
       hours = parseInt($('#hours').val()),
       complete = parseInt($("#complete").val());
 
@@ -40,8 +38,8 @@ function render() {
   $('.progress-mask').css({'margin-top' : heightOffset + 'px' });
 
   saveData({
-    start: start,
-    deadline: deadline,
+    start: start.format(dateFormat),
+    deadline: deadline.format(dateFormat),
     hours: hours,
     complete: complete
   });
@@ -54,13 +52,37 @@ function saveData(datas) {
 }
 
 function loadData() {
-  var start = moment(localStorage.getItem('start')),
-      deadline = moment(localStorage.getItem('deadline')),
+  var dateFormat = 'YYYY-MM-DD',
+      start = moment(localStorage.getItem('start'), dateFormat),
+      deadline = moment(localStorage.getItem('deadline'), dateFormat),
       hours = localStorage.getItem('hours'),
       complete = localStorage.getItem('complete');
 
-  $('#start').val(start.format('MM-DD-YYYY'));
-  $('#deadline').val(deadline.format('MM-DD-YYYY'));
+  $('#start').val(start.format(dateFormat));
+  $('#deadline').val(deadline.format(dateFormat));
   $('#hours').val(hours);
   $('#complete').val(complete);
+}
+
+function logHour() {
+  var complete = parseInt(localStorage.getItem('complete')),
+      logHistory = localStorage.getItem('logHistory');
+
+  if (isNaN(complete)) {
+    return;
+  }
+
+  complete += 1;
+  logHistory = JSON.parse(logHistory) || [];
+  logHistory.push(moment().toISOString());
+  saveData({complete: complete, logHistory: JSON.stringify(logHistory)});
+  loadData();
+  render();
+}
+
+function clearData() {
+  if(confirm("Clear data???")) {
+    localStorage.clear();
+    loadData();
+  }
 }
