@@ -15,18 +15,19 @@ function registerEvents() {
 
 function render() {
   var dateFormat = 'YYYY-MM-DD',
-      start = moment($('#start').val(), dateFormat),
+      complete = parseInt($("#complete").val()),
       deadline = moment($('#deadline').val(), dateFormat),
       hours = parseInt($('#hours').val()),
-      complete = parseInt($("#complete").val());
+      now = moment(),
+      start = moment($('#start').val(), dateFormat);
 
   if (isNaN(start) || isNaN(deadline) || isNaN(hours) || isNaN(complete)) {
     return;
   }
 
-  var daysLeft = deadline.diff(start, 'days');
-  var hoursLeft = hours - complete;
-  var hoursPerDayLeft = (hoursLeft / daysLeft).toFixed(2);
+  var daysLeft = deadline.diff(now, 'days'),
+      hoursLeft = hours - complete,
+      hoursPerDayLeft = (hoursLeft / daysLeft).toFixed(2);
 
   $('.days-left').text(daysLeft);
   $('.hours-left').text(hoursLeft);
@@ -53,10 +54,10 @@ function saveData(datas) {
 
 function loadData() {
   var dateFormat = 'YYYY-MM-DD',
-      start = localStorage.getItem('start'),
+      complete = localStorage.getItem('complete'),
       deadline = localStorage.getItem('deadline'),
       hours = localStorage.getItem('hours'),
-      complete = localStorage.getItem('complete');
+      start = localStorage.getItem('start');
 
   if (start) {
     $('#start').val(moment(start, dateFormat).format(dateFormat));
