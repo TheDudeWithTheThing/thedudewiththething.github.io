@@ -1,9 +1,6 @@
 url: thedudewiththething.com
 timezone: America/New_York
-highlighter: rogue
 markdown: kramdown
-redcarpet:
-  extensions: [footnotes, no_intra_emphasis, fenced_code_blocks, autolink, strikethrough, superscript, with_toc_data]
 exclude: ['Gruntfile.coffee', 'bower.json', 'package.json', 'Gemfile', 'Gemfile.lock', 'README.md']
 description: >
   A place for tech projects and the like.
