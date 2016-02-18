@@ -10,14 +10,15 @@ function registerEvents() {
   $('#hours').on('keyup', render);
   $('#complete').on('keyup', render);
   $('.log-hour').on('click', logHour);
+  $('.log-half-hour').on('click', logHalfHour);
   $('.clear-data').on('click', clearData);
 }
 
 function render() {
   var dateFormat = 'YYYY-MM-DD',
-      complete = parseInt($("#complete").val()),
+      complete = parseFloat($("#complete").val()),
       deadline = moment($('#deadline').val(), dateFormat),
-      hours = parseInt($('#hours').val()),
+      hours = parseFloat($('#hours').val()),
       now = moment(),
       start = moment($('#start').val(), dateFormat);
 
@@ -71,14 +72,22 @@ function loadData() {
 }
 
 function logHour() {
-  var complete = parseInt(localStorage.getItem('complete')),
+  logTime(1.0);
+}
+
+function logHalfHour() {
+  logTime(0.5);
+}
+
+function logTime(amount) {
+  var complete = parseFloat(localStorage.getItem('complete')),
       logHistory = localStorage.getItem('logHistory');
 
   if (isNaN(complete)) {
     return;
   }
 
-  complete += 1;
+  complete += amount;
   logHistory = JSON.parse(logHistory) || [];
   logHistory.push(moment().toISOString());
   saveData({complete: complete, logHistory: JSON.stringify(logHistory)});
