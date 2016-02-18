@@ -131,7 +131,6 @@ PLATFORMS
 DEPENDENCIES
   github-pages
   pygments.rb
-  redcarpet
 
 BUNDLED WITH
    1.11.2
