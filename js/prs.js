@@ -1,43 +1,41 @@
-$( function() {
-  registerEvents();
-  loadData();
-  render();
-});
+const q = document.querySelector.bind(document);
 
 function registerEvents() {
-  $('#start').on('keyup', render);
-  $('#deadline').on('keyup', render);
-  $('#hours').on('keyup', render);
-  $('#complete').on('keyup', render);
-  $('.log-hour').on('click', logHour);
-  $('.log-half-hour').on('click', logHalfHour);
-  $('.clear-data').on('click', clearData);
+  q('#start').addEventListener('blur', render);
+  q('#deadline').addEventListener('blur', render);
+  q('#hours').addEventListener('blur', render);
+  q('#complete').addEventListener('blur', render);
+  q('.log-hour').addEventListener('click', logHour);
+  q('.log-half-hour').addEventListener('click', logHalfHour);
+  q('.clear-data').addEventListener('click', clearData);
 }
 
 function render() {
-  var dateFormat = 'YYYY-MM-DD',
-      complete = parseFloat($("#complete").val()),
-      deadline = moment($('#deadline').val(), dateFormat),
-      hours = parseFloat($('#hours').val()),
-      now = moment(),
-      start = moment($('#start').val(), dateFormat);
+  const dateFormat = 'YYYY-MM-DD';
+  const complete = q("#complete").valueAsNumber;
+  const deadline = moment(q('#deadline').value, dateFormat);
+  const hours = q('#hours').valueAsNumber;
+  const now = moment();
+  const start = moment(q('#start').value, dateFormat);
 
-  if (isNaN(start) || isNaN(deadline) || isNaN(hours) || isNaN(complete)) {
+  if (Number.isNaN(start) || Number.isNaN(deadline)
+      || Number.isNaN(hours) || Number.isNaN(complete)) {
     return;
   }
 
-  var daysLeft = deadline.diff(now, 'days'),
-      hoursLeft = hours - complete,
-      hoursPerDayLeft = (hoursLeft / daysLeft).toFixed(2);
+  const daysLeft = deadline.diff(now, 'days');
+  const hoursLeft = hours - complete;
+  const hoursPerDayLeft = (hoursLeft / daysLeft).toFixed(2);
 
-  $('.days-left').text(daysLeft);
-  $('.hours-left').text(hoursLeft);
-  $('.hours-per-day').text(hoursPerDayLeft);
+  q('.days-left').innerHTML = daysLeft;
+  q('.hours-left').innerHTML = hoursLeft;
+  q('.hours-per-day').innerHTML = hoursPerDayLeft;
 
-  var height = $('.progress-mask').height(),
-      percentComplete = complete / hours,
-      heightOffset = height * percentComplete * -1;
-  $('.progress-mask').css({'margin-top' : heightOffset + 'px' });
+  const height = q('.progress-mask').clientHeight;
+  const percentComplete = complete / hours;
+  const heightOffset = height * percentComplete * -1;
+
+  q('.progress-mask').style.marginTop = heightOffset + 'px';
 
   saveData({
     start: start.format(dateFormat),
@@ -54,21 +52,21 @@ function saveData(datas) {
 }
 
 function loadData() {
-  var dateFormat = 'YYYY-MM-DD',
-      complete = localStorage.getItem('complete'),
-      deadline = localStorage.getItem('deadline'),
-      hours = localStorage.getItem('hours'),
-      start = localStorage.getItem('start');
+  const dateFormat = 'YYYY-MM-DD';
+  const complete = localStorage.getItem('complete');
+  const deadline = localStorage.getItem('deadline');
+  const hours = localStorage.getItem('hours');
+  const start = localStorage.getItem('start');
 
   if (start) {
-    $('#start').val(moment(start, dateFormat).format(dateFormat));
+    q('#start').value = moment(start, dateFormat).format(dateFormat);
   }
   if (deadline) {
-    $('#deadline').val(moment(deadline, dateFormat).format(dateFormat));
+    q('#deadline').value = moment(deadline, dateFormat).format(dateFormat);
   }
 
-  $('#hours').val(hours);
-  $('#complete').val(complete);
+  q('#hours').value = hours;
+  q('#complete').value = complete;
 }
 
 function logHour() {
@@ -80,10 +78,10 @@ function logHalfHour() {
 }
 
 function logTime(amount) {
-  var complete = parseFloat(localStorage.getItem('complete')),
-      logHistory = localStorage.getItem('logHistory');
+  let complete = parseFloat(localStorage.getItem('complete'));
+  let logHistory = localStorage.getItem('logHistory');
 
-  if (isNaN(complete)) {
+  if (Number.isNaN(complete)) {
     return;
   }
 
@@ -101,3 +99,7 @@ function clearData() {
     loadData();
   }
 }
+
+registerEvents();
+loadData();
+render();
