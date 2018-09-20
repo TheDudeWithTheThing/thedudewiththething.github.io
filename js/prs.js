@@ -1,18 +1,14 @@
 const q = document.querySelector.bind(document);
 
-function registerEvents() {
-  q('#start').addEventListener('blur', render);
-  q('#deadline').addEventListener('blur', render);
-  q('#hours').addEventListener('blur', render);
-  q('#complete').addEventListener('blur', render);
-  q('.log-hour').addEventListener('click', logHour);
-  q('.log-half-hour').addEventListener('click', logHalfHour);
-  q('.clear-data').addEventListener('click', clearData);
+function saveData(datas) {
+  Object.keys(datas).forEach((key) => {
+    localStorage.setItem(key, datas[key]);
+  });
 }
 
 function render() {
   const dateFormat = 'YYYY-MM-DD';
-  const complete = q("#complete").valueAsNumber;
+  const complete = q('#complete').valueAsNumber;
   const deadline = moment(q('#deadline').value, dateFormat);
   const hours = q('#hours').valueAsNumber;
   const now = moment();
@@ -35,19 +31,13 @@ function render() {
   const percentComplete = complete / hours;
   const heightOffset = height * percentComplete * -1;
 
-  q('.progress-mask').style.marginTop = heightOffset + 'px';
+  q('.progress-mask').style.marginTop = `${heightOffset}px`;
 
   saveData({
     start: start.format(dateFormat),
     deadline: deadline.format(dateFormat),
-    hours: hours,
-    complete: complete
-  });
-}
-
-function saveData(datas) {
-  Object.keys(datas).forEach( function(key) {
-    localStorage.setItem(key, datas[key]);
+    hours,
+    complete,
   });
 }
 
@@ -69,14 +59,6 @@ function loadData() {
   q('#complete').value = complete;
 }
 
-function logHour() {
-  logTime(1.0);
-}
-
-function logHalfHour() {
-  logTime(0.5);
-}
-
 function logTime(amount) {
   let complete = parseFloat(localStorage.getItem('complete'));
   let logHistory = localStorage.getItem('logHistory');
@@ -88,16 +70,34 @@ function logTime(amount) {
   complete += amount;
   logHistory = JSON.parse(logHistory) || [];
   logHistory.push(moment().toISOString());
-  saveData({complete: complete, logHistory: JSON.stringify(logHistory)});
+  saveData({ complete, logHistory: JSON.stringify(logHistory) });
   loadData();
   render();
 }
 
+function logHour() {
+  logTime(1.0);
+}
+
+function logHalfHour() {
+  logTime(0.5);
+}
+
 function clearData() {
-  if(confirm("Clear data???")) {
+  if (window.confirm('Clear data???')) {
     localStorage.clear();
     loadData();
   }
+}
+
+function registerEvents() {
+  q('#start').addEventListener('blur', render);
+  q('#deadline').addEventListener('blur', render);
+  q('#hours').addEventListener('blur', render);
+  q('#complete').addEventListener('blur', render);
+  q('.log-hour').addEventListener('click', logHour);
+  q('.log-half-hour').addEventListener('click', logHalfHour);
+  q('.clear-data').addEventListener('click', clearData);
 }
 
 registerEvents();
