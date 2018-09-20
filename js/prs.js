@@ -1,26 +1,22 @@
-$( function() {
-  registerEvents();
-  loadData();
-  render();
-});
+var q = document.querySelector.bind(document);
 
 function registerEvents() {
-  $('#start').on('keyup', render);
-  $('#deadline').on('keyup', render);
-  $('#hours').on('keyup', render);
-  $('#complete').on('keyup', render);
-  $('.log-hour').on('click', logHour);
-  $('.log-half-hour').on('click', logHalfHour);
-  $('.clear-data').on('click', clearData);
+  q('#start').addEventListener('blur', render);
+  q('#deadline').addEventListener('blur', render);
+  q('#hours').addEventListener('blur', render);
+  q('#complete').addEventListener('blur', render);
+  q('.log-hour').addEventListener('click', logHour);
+  q('.log-half-hour').addEventListener('click', logHalfHour);
+  q('.clear-data').addEventListener('click', clearData);
 }
 
 function render() {
   var dateFormat = 'YYYY-MM-DD',
-      complete = parseFloat($("#complete").val()),
-      deadline = moment($('#deadline').val(), dateFormat),
-      hours = parseFloat($('#hours').val()),
+      complete = q("#complete").valueAsNumber,
+      deadline = moment(q('#deadline').value, dateFormat),
+      hours = q('#hours').valueAsNumber,
       now = moment(),
-      start = moment($('#start').val(), dateFormat);
+      start = moment(q('#start').value, dateFormat);
 
   if (isNaN(start) || isNaN(deadline) || isNaN(hours) || isNaN(complete)) {
     return;
@@ -30,14 +26,15 @@ function render() {
       hoursLeft = hours - complete,
       hoursPerDayLeft = (hoursLeft / daysLeft).toFixed(2);
 
-  $('.days-left').text(daysLeft);
-  $('.hours-left').text(hoursLeft);
-  $('.hours-per-day').text(hoursPerDayLeft);
+  q('.days-left').innerHTML = daysLeft;
+  q('.hours-left').innerHTML = hoursLeft;
+  q('.hours-per-day').innerHTML = hoursPerDayLeft;
 
-  var height = $('.progress-mask').height(),
+  var height = q('.progress-mask').clientHeight,
       percentComplete = complete / hours,
       heightOffset = height * percentComplete * -1;
-  $('.progress-mask').css({'margin-top' : heightOffset + 'px' });
+
+  q('.progress-mask').style.marginTop = heightOffset + 'px';
 
   saveData({
     start: start.format(dateFormat),
@@ -61,14 +58,14 @@ function loadData() {
       start = localStorage.getItem('start');
 
   if (start) {
-    $('#start').val(moment(start, dateFormat).format(dateFormat));
+    q('#start').value = moment(start, dateFormat).format(dateFormat);
   }
   if (deadline) {
-    $('#deadline').val(moment(deadline, dateFormat).format(dateFormat));
+    q('#deadline').value = moment(deadline, dateFormat).format(dateFormat);
   }
 
-  $('#hours').val(hours);
-  $('#complete').val(complete);
+  q('#hours').value = hours
+  q('#complete').value = complete
 }
 
 function logHour() {
@@ -101,3 +98,7 @@ function clearData() {
     loadData();
   }
 }
+
+registerEvents();
+loadData();
+render();
