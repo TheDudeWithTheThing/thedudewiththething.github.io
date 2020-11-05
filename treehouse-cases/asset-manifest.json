@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/treehouse-cases/static/css/main.22165f8e.chunk.css",
+    "main.js": "/treehouse-cases/static/js/main.1e6e7b68.chunk.js",
+    "main.js.map": "/treehouse-cases/static/js/main.1e6e7b68.chunk.js.map",
+    "runtime-main.js": "/treehouse-cases/static/js/runtime-main.42939a68.js",
+    "runtime-main.js.map": "/treehouse-cases/static/js/runtime-main.42939a68.js.map",
+    "static/js/2.2c43c8a9.chunk.js": "/treehouse-cases/static/js/2.2c43c8a9.chunk.js",
+    "static/js/2.2c43c8a9.chunk.js.map": "/treehouse-cases/static/js/2.2c43c8a9.chunk.js.map",
+    "static/js/3.7b589ad9.chunk.js": "/treehouse-cases/static/js/3.7b589ad9.chunk.js",
+    "static/js/3.7b589ad9.chunk.js.map": "/treehouse-cases/static/js/3.7b589ad9.chunk.js.map",
+    "index.html": "/treehouse-cases/index.html",
+    "static/css/main.22165f8e.chunk.css.map": "/treehouse-cases/static/css/main.22165f8e.chunk.css.map",
+    "static/js/2.2c43c8a9.chunk.js.LICENSE.txt": "/treehouse-cases/static/js/2.2c43c8a9.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.42939a68.js",
+    "static/js/2.2c43c8a9.chunk.js",
+    "static/css/main.22165f8e.chunk.css",
+    "static/js/main.1e6e7b68.chunk.js"
+  ]
+}
