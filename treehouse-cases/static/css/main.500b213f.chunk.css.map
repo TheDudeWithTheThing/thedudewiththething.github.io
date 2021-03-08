@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://src/App.css"],"names":[],"mappings":"AAEA,eACE,aACF","file":"main.500b213f.chunk.css","sourcesContent":["@import 'antd/dist/antd.css';\n\n.sider-padding {\n  padding: 0px 8px;\n}\n"]}
