@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Word Scramble Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 18px;
+      text-align: center;
+    }
+    #game-container {
+      margin-top: 50px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+    #word-container {
+      background-color: lightgray;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    #word-container p {
+      margin-right: 10px;
+    }
+    #word-info {
+      margin-left: 30px;
+      font-size: 18px;
+    }
+    #score,
+    #wrong-guesses {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Word Scramble Game</h1>
+  <div id="game-container">
+    <div id="word-container">
+      <p><b>Guess the word: </b></p>
+      <p id="scrambled-word"></p>
+      <div id="word-info">
+        <p>Score: <span id="score">0</span></p>
+        <p>Guesses left: <span id="attempts">3</span></p>
+      </div>
+    </div>
+    <input type="text" id="guess-input">
+    <button onclick="checkGuess()">Check</button>
+    <p id="message"></p>
+    <div id="wrong-guesses"></div>
+  </div>
+
+  <script>
+    var elliotWordList = ["strong", "wrong", "copy", "cloth", "problem", "bottom",
+    "whole", "explode", "control", "shown", "bowl", "October", "smoky", "coach",
+    "throat", "toast", "doughnut", "foe", "wampum", "sachem"];
+
+    var wordList = ["creature", "teacher", "eager", "please", "season", "sweetest", "squeak", "least", "sneeze", "reason", "meaning", "agreement", "peace", "between"];
+
+    var score = localStorage.getItem('score') || 0;
+    localStorage.setItem('wrongGuesses', JSON.stringify({}));
+    localStorage.setItem('score', score);
+
+    var currentWordIndex = Math.floor(Math.random() * wordList.length);
+    var attemptsLeft = 3;
+    let showWrongGuesses = false;
+
+    function scrambleWord(word) {
+      return word.split('').sort(function(){return 0.5-Math.random()}).join('');
+    }
+
+    function startGame() {
+      document.getElementById('guess-input').value = '';
+      attemptsLeft = 3;
+      document.getElementById('attempts').innerText = attemptsLeft;
+      document.getElementById('message').innerText = '';
+
+      if (wordList.length === 0) {
+        document.getElementById('scrambled-word').innerText = 'Game Over!';
+        document.getElementById('guess-input').setAttribute('disabled', 'disabled');
+        document.getElementById('score').style.display = 'inline-block';
+        document.getElementById('wrong-guesses').style.display = 'inline-block';
+        return;
+      }
+
+      currentWordIndex = Math.floor(Math.random() * wordList.length);
+      var wordToGuess = wordList[currentWordIndex];
+      var scrambledWord = scrambleWord(wordToGuess);
+      document.getElementById('scrambled-word').innerText = scrambledWord;
+    }
+
+    function checkGuess() {
+      var guessedWord = document.getElementById('guess-input').value;
+      var wordToGuess = wordList[currentWordIndex];
+
+      if (guessedWord === wordToGuess) {
+        document.getElementById('message').innerText = 'Congratulations! You guessed the word correctly.';
+        score++;
+        localStorage.setItem('score', score);
+        document.getElementById('score').innerText = score;
+
+        wordList.splice(currentWordIndex, 1);
+        startGame();
+      } else {
+        storeWrongGuess(wordToGuess, guessedWord);
+        displayWrongGuesses();
+
+        attemptsLeft--;
+        document.getElementById('attempts').innerText = attemptsLeft;
+        if (attemptsLeft > 0) {
+          document.getElementById('message').innerText = `Incorrect guess. ${attemptsLeft} attempt(s) left. Try again.`;
+        } else {
+          document.getElementById('message').innerText = `Sorry, you've used all your attempts. The word was '${wordToGuess}'.`;
+          document.getElementById('scrambled-word').innerText = wordToGuess; // Reveal the actual word
+          setTimeout(startGame, 3000);
+        }
+      }
+    }
+
+    function storeWrongGuess(wordToGuess, guessedWord) {
+      const wrongGuesses = JSON.parse(localStorage.getItem('wrongGuesses'));
+      if (!wrongGuesses[wordToGuess]) {
+        wrongGuesses[wordToGuess] = [];
+      }
+      wrongGuesses[wordToGuess].push(guessedWord);
+      localStorage.setItem('wrongGuesses', JSON.stringify(wrongGuesses));
+    }
+
+    function toggleWrongGuesses() {
+      showWrongGuesses = !showWrongGuesses;
+      var wrongGuessesDiv = document.getElementById('wrong-guesses');
+      if (showWrongGuesses) {
+        wrongGuessesDiv.style.display = 'block';
+        displayWrongGuesses();
+      } else {
+        wrongGuessesDiv.style.display = 'none';
+      }
+    }
+
+    function displayWrongGuesses() {
+      const wrongGuesses = JSON.parse(localStorage.getItem('wrongGuesses')) || {};
+      var wrongGuessesDiv = document.getElementById('wrong-guesses');
+      wrongGuessesDiv.innerHTML = '<h3>Wrong Guesses</h3>';
+      for (var word in wrongGuesses) {
+        if (wrongGuesses.hasOwnProperty(word)) {
+          wrongGuessesDiv.innerHTML += `<p>Word: ${word}, Guessed: ${wrongGuesses[word].join(", ")}</p>`;
+        }
+      }
+    }
+
+    document.getElementById('guess-input').addEventListener('keypress', function(event) {
+      if (event.key === 'Enter') {
+        checkGuess();
+      }
+    });
+
+    window.onload = function() {
+      startGame();
+      document.getElementById('score').innerText = score;
+    };
+  </script>
+</body>
+</html>
+
